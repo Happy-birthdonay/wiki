@@ -2,7 +2,7 @@
 
 ## 기존 내용
 
-![기존](images/first.png)
+![기존](/images/ERD/20240219-v1.png)
 
 ## 수정 사항
 
@@ -33,4 +33,4 @@
 
 ## 새 내용
 
-![기존](images/second.png)
+![기존](/images/ERD/20240219-v2.png)
