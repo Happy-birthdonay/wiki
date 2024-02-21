@@ -1,1 +1,1 @@
-# wiki
+![logo](/images/icons/hbdy_logo.jpeg)
