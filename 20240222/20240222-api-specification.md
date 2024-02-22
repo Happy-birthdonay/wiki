@@ -2,6 +2,7 @@
 
 #### History
 2022.02.20 - 은빈 작성
+2022.02.22 - 은빈, 민주 작성
 
 ## DB 스키마
 
@@ -18,22 +19,41 @@
 #### 기본 정보
 | method | request URL          | format | description |
 |--------|----------------------|--------|-------------|
-|POST    |{base-url}/users      | JSON   | 회원가입      |
+|POST    |{base-url}/sign-up    | JSON   | 회원가입      |
 
 #### 요청 변수
 
 | name | type | required | description |
 |------|------|----------|-------------|
-| client_id | String | Y | - SNS 로그인 후 받은 client_id |
-| refresh_token | String | Y | - SNS 로그인 후 받은 refresh_token |
 | name | String | Y | - 사용자 닉네임 <br> - 최대 25자 |
 | birthday | Datetime | Y | - 사용자 생일 <br> - "YYYYMMDD" 형식으로 KST 기준 |
 
 #### 요청 헤더
 
+- 없음
+
+#### 응답 헤더
+
+- access_token, refresh_token 과 같은 토큰류들을 Set-cookie 헤더에 넣어서 보냄
+
 #### 출력 결과
 
-#### 에러 코드
+```json
+// 성공 - 200~
+{
+	"result": "success",
+	"message": "성공",
+	"data": {
+		"user_id": 1,
+	}
+}
+
+// 실패 - 400 ~ 5??
+{
+	"result": "failure",
+	"message": "회원가입에 실패했습니다.",
+}
+```
 
 ### 사용자 정보 조회
 
@@ -44,21 +64,31 @@
 
 #### 요청 변수
 
+- 없음
+
 #### 요청 헤더
+
+- Authorization 에 Bearer 토큰
 
 #### 출력 결과
 
 ```json
+// 성공
 {
 	"result": "success",
+	"message": "성공",
 	"data": {
 		"name": "세리",
 		"birthday": "19960123",
 	}
 }
-```
 
-#### 에러 코드
+// 실패
+{
+	"result": "failure",
+	"message": "사용자가 없습니다.",
+}
+```
 
 ## 기부 상자
 
@@ -82,10 +112,27 @@
 
 #### 요청 헤더
 
+- Authorization 에 Bearer 토큰
+
 #### 출력 결과
 
-#### 에러 코드
+```json
+// 성공
+{
+	"result": "success",
+	"message": "성공",
+	"data": {
+		"name": "그린피스",
+		"color": "pink",
+	}
+}
 
+// 실패
+{
+	"result": "failure",
+	"message": "상자 만드는 데 실패했습니다.",
+}
+```
 
 ### 상자 리스트 가져오기
 
@@ -94,11 +141,13 @@
 |--------|----------------------|--------|-------------|
 |GET    |{base-url}/donation-boxes/{user-id}/all| JSON   | 해당 사용자의 상자 리스트를 모두 가져오기 |
 
-**Q. user-id를 파라미터로 넣는게 맞는지 헤더에 Authorization 필드를 추가하는게 맞는지?**
-
 #### 요청 변수
 
+- 없음
+
 #### 요청 헤더
+
+- Authorization 에 Bearer 토큰
 
 #### 출력 결과
 
@@ -106,6 +155,7 @@
 // 상자 리스트가 비어있을 때
 {
 	"result": "success",
+	"message": "성공",
 	"data": {
 		"donation_box_list": [],
 	}
@@ -114,6 +164,7 @@
 // 상자 리스트에 요소가 하나라도 있을 때
 {
 	"result": "success",
+	"message": "성공",
 	"data": {
 		"donation_box_list": [
 			{
@@ -132,11 +183,13 @@
 		]
 	}
 }
+
+// 실패
+{
+	"result": "failure",
+	"message": "상자 리스트를 가져오는데 실패했습니다.",
+}
 ```
-
-#### 에러 코드
-
-
 
 ### 상자 정보 가져오기
 
@@ -145,17 +198,21 @@
 |--------|----------------------|--------|-------------|
 |GET    |{base-url}/donation-boxes/{user-id}/{box-id}| JSON   | 해당 사용자의 선택된 상자에 대한 세부 내용 가져오기|
 
-**Q. user-id를 파라미터로 넣는게 맞는지 헤더에 Authorization 필드를 추가하는게 맞는지?**
-
 #### 요청 변수
 
+- 없음
+
 #### 요청 헤더
+
+- Authorization 에 Bearer 토큰
 
 #### 출력 결과
 
 ```json
+// 성공
 {
 	"result": "success",
+	"message": "성공",
 	"data": {
 		"name": "그린피스",
 		"url": "https://....",
@@ -164,20 +221,27 @@
 		"color": "pink",
 		"is_donated": false,
 		"cert_img_url": "",
+		"open_date": "20230123",
+		"message_count": 10,
 	},
+}
+
+// 실패
+{
+	"result": "failure",
+	"message": "상자 정보를 가져올 수 없습니다."
 }
 ```
 
-**Q. 상자의 개봉 가능 날짜를 user-id를 통해 GET 해오는게 맞는지 data에 같이 실어 보내는게 맞는지?**
-
-#### 에러 코드
+- open_date는 저장된 형식대로 전송
+- message_count는 상자에 담긴 쪽지 개수, 없을 땐 0으로 보내주기
 
 ### 상자 기부 여부 변경하기
 
 #### 기본 정보
 | method | request URL          | format | description |
 |--------|----------------------|--------|-------------|
-|POST    |{base-url}/donation-boxes/{box-id}| JSON   | 새 상자 만들기 |
+|PUT    |{base-url}/donation-boxes/{box-id}| JSON   | 기부 여부 변경하기 |
 
 #### 요청 변수
 
@@ -187,9 +251,23 @@
 
 #### 요청 헤더
 
+- Authorization 에 Bearer 토큰
+
 #### 출력 결과
 
-#### 에러 코드
+```json
+// 성공
+{
+	"result": "success",
+	"message": "성공",
+}
+
+// 실패
+{
+	"result": "failure",
+	"message": "수정에 실패했습니다.",
+}
+```
 
 ## 쪽지
 
@@ -211,9 +289,26 @@
 
 #### 요청 헤더
 
+- 없음
+
 #### 출력 결과
 
-#### 에러 코드
+> ‼️ 고민! <br>
+> 쪽지가 보내졌는지 안 보내졌는지 피드백을 좀 더 상세히 해야 할 필요는?
+
+```json
+// 성공
+{
+	"result": "success",
+	"message": "성공",
+}
+
+// 실패
+{
+	"result": "failure",
+	"message": "메시지 전송에 실패했습니다.",
+}
+```
 
 ### 쪽지 리스트 가져오기
 
@@ -222,11 +317,13 @@
 |--------|----------------------|--------|-------------|
 |GET |{base-url}/messages/{user-id}/all | JSON | 쪽지 리스트 가져오기 |
 
-**Q. user-id를 파라미터로 넣는게 맞는지 헤더에 Authorization 필드를 추가하는게 맞는지?**
-
 #### 요청 변수
 
+- 없음
+
 #### 요청 헤더
+
+- Authorization 에 Bearer 토큰
 
 #### 출력 결과
 
@@ -234,6 +331,7 @@
 // 쪽지 리스트가 비어있을 때
 {
 	"result": "success",
+	"message": "성공",
 	"data": {
 		"message_list": [],
 	}
@@ -242,55 +340,42 @@
 // 쪽지 리스트에 요소가 하나라도 있을 때
 {
 	"result": "success",
+	"message": "성공",
 	"data": {
 		"message_list": [
 			{
 				"id": "1",
 				"created_by": "박민주",
+				"contents": "축하합니다축하합니다축하합니다축하합니다",
 				"tag": "happiness",
 			},
 			{
 				"id": "2",
 				"created_by": "복예린",
-				"tag": "peace",
+				"contents": "축하합니다축하합니다축하합니다축하합니다",
+				"tag": "happiness",
 			},
 			{
 				"id": "7",
 				"created_by": "민주똥꼬불난다",
-				"tag": "health",
+				"contents": "축하합니다축하합니다축하합니다축하합니다",
+				"tag": "happiness",
 			},
 			...
 		]
 	}
 }
+
+// 실패
+{
+	"result": "failure",
+	"message": "쪽지 리스트를 가져오는데 실패했습니다.",
+}
 ```
 
-**!! 쪽지 리스트를 어떻게 보여줄것인지 UI에 따라 결과 달라짐**
+- 전체 쪽지 전송
 
-#### 에러 코드
-
-### 쪽지 정보 가져오기
-
-#### 기본 정보
-| method | request URL          | format | description |
-|--------|----------------------|--------|-------------|
-|GET  |{base-url}/messages/{user-id}/{message-id} | JSON   | 쪽지에 대한 상세 정보 가져오기 |
-
-**Q. user-id를 파라미터로 넣는게 맞는지 헤더에 Authorization 필드를 추가하는게 맞는지?**
-
-**Q. 페이지네이션 할 때 페이지는 요청변수로 넣어 보내면 될지?**
-
-#### 요청 변수
-
-#### 요청 헤더
-
-#### 출력 결과
-
-```json
-// 논의 필요
-```
-
-#### 에러 코드
+> ‼️ 나중에 쪽지 개수가 많아지고 복잡해지면 페이지네이션 필요할 수 있음!
 
 ## 증명서
 
@@ -309,10 +394,63 @@
 
 #### 요청 헤더
 
+- Authorization 에 Bearer 토큰
+
 #### 출력 결과
 
-#### 에러 코드
+```json
+// 성공
+{
+	"result": "success",
+	"message": "성공",
+}
 
+// 실패
+{
+	"result": "failure",
+	"message": "이미지 저장에 실패했습니다.",
+}
+```
+
+### 증명서 정보 가져오기
+
+#### 기본 정보
+| method | request URL          | format | description |
+|--------|----------------------|--------|-------------|
+|GET    |{base-url}/certifications/{box-id} | JSON | 증명서에 들어갈 내용 가져오기 |
+
+#### 요청 변수
+
+- 없음
+
+#### 요청 헤더
+
+- Authorization 에 Bearer 토큰
+
+#### 출력 결과
+
+```json
+// 성공
+{
+	"result": "success",
+	"message": "성공",
+	"data": {
+		"box_name": "그린피스",
+		"box_created_by": "권은빈",
+		"donors_name": ["박민주", "복예린", ...],
+		"cert_img_url": "s3_image_url",
+		"cert_created_at": "20240124",
+	}
+}
+
+// 실패
+{
+	"result": "failure",
+	"message": "증명서 정보 가져오기에 실패했습니다.",
+}
+```
+
+- cert_created_at 타입 Datetime, KST, YYYYMMDD
 
 # References
 
