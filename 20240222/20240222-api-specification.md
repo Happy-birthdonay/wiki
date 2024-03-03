@@ -5,6 +5,8 @@
 
 2022.02.22 - 은빈, 민주 작성
 
+2022.02.28 - 은빈, 민주 수정
+
 ## DB 스키마
 
 ![이미지](/images/ERD/20240222-v3.png)
@@ -64,7 +66,7 @@
 #### 기본 정보
 | method | request URL          | format | description |
 |--------|----------------------|--------|-------------|
-|GET   |{base-url}/users/{user-id}| JSON | 사용자 정보 조회|
+|GET   |{base-url}/users| JSON | 사용자 정보 조회|
 
 #### 요청 변수
 
@@ -143,7 +145,7 @@
 #### 기본 정보
 | method | request URL          | format | description |
 |--------|----------------------|--------|-------------|
-|GET    |{base-url}/donation-boxes/{user-id}/all| JSON   | 해당 사용자의 상자 리스트를 모두 가져오기 |
+|GET    |{base-url}/donation-boxes| JSON   | 해당 사용자의 상자 리스트를 모두 가져오기 |
 
 #### 요청 변수
 
@@ -200,7 +202,7 @@
 #### 기본 정보
 | method | request URL          | format | description |
 |--------|----------------------|--------|-------------|
-|GET    |{base-url}/donation-boxes/{user-id}/{box-id}| JSON   | 해당 사용자의 선택된 상자에 대한 세부 내용 가져오기|
+|GET    |{base-url}/donation-boxes/{box-id}| JSON   | 해당 사용자의 선택된 상자에 대한 세부 내용 가져오기|
 
 #### 요청 변수
 
@@ -245,7 +247,7 @@
 #### 기본 정보
 | method | request URL          | format | description |
 |--------|----------------------|--------|-------------|
-|PUT    |{base-url}/donation-boxes/{box-id}| JSON   | 기부 여부 변경하기 |
+|PATCH  |{base-url}/donation-boxes/{box-id}| JSON   | 기부 여부 변경하기 |
 
 #### 요청 변수
 
@@ -319,7 +321,7 @@
 #### 기본 정보
 | method | request URL          | format | description |
 |--------|----------------------|--------|-------------|
-|GET |{base-url}/messages/{user-id}/all | JSON | 쪽지 리스트 가져오기 |
+|GET |{base-url}/messages | JSON | 쪽지 리스트 가져오기 |
 
 #### 요청 변수
 
@@ -379,7 +381,8 @@
 
 - 전체 쪽지 전송
 
-> ‼️ 나중에 쪽지 개수가 많아지고 복잡해지면 페이지네이션 필요할 수 있음!
+> ‼️ 나중에 쪽지 개수가 많아지고 복잡해지면 페이지네이션 필요할 수 있음! <br>
+> 이 때 페이지별 개수 등 논의 후 Query Parameter 추가
 
 ## 증명서
 
@@ -394,6 +397,7 @@
 
 | name | type | required | description |
 |------|------|----------|-------------|
+| boxId | Int | Y | - 증명서에 해당하는 선물상자 ID |
 | image | String | Y | - 증명서에 첨부될 사진 <br> - Base64 인코딩 필요 |
 
 #### 요청 헤더
@@ -461,3 +465,5 @@
 [RESTful API 네이밍 컨벤션](https://restfulapi.net/resource-naming/)
 
 [네이버 카페 API 문서](https://developers.naver.com/docs/login/cafe-api/cafe-api.md)
+
+[Patch](https://www.qu3vipon.com/idempotence-of-patch), [Query Param vs Path Variable에 대한 아티클 번역문](https://ryan-han.com/post/translated/pathvariable_queryparam/)
