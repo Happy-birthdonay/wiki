@@ -7,40 +7,43 @@
 
 2022.02.28 - 은빈, 민주 수정
 
+2022.03.06 - 은빈, 민주 수정
+
 ## DB 스키마
 
 ![이미지](/images/ERD/20240222-v3.png)
 
-- 증명서에 대한 정보에 추가된 사항이 있어 `cert_created_at` 컬럼을 추가했습니다.
-- client_id를 저장하는 대신 `access_token`을 저장하도록 변경했습니다.
-
-## 로그인
-
-- [카카오 로그인](https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api)
+> check: Auth Code, 카카오 Access/Refresh token 저장 여부 조금 더 고민해봐야 함
 
 ## 사용자
 
-### 회원가입
+### OAuth
+
+- [카카오 로그인](https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api)
+
+- [참고한 벨로그 글](https://velog.io/@max9106/OAuth)
+
+![Velog Image](https://velog.velcdn.com/images%2Fmax9106%2Fpost%2F5620524a-4359-4abd-b90c-07b65359b3ca%2F%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202021-07-12%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%204.16.43.png)
+
 
 #### 기본 정보
 | method | request URL          | format | description |
 |--------|----------------------|--------|-------------|
-|POST    |{base-url}/sign-up    | JSON   | 회원가입      |
+|POST    |{base-url}/oauth/token| JSON   | 카카오에서 발급한 인증 코드 보내기 |
 
 #### 요청 변수
 
 | name | type | required | description |
 |------|------|----------|-------------|
-| name | String | Y | - 사용자 닉네임 <br> - 최대 25자 |
-| birthday | Datetime | Y | - 사용자 생일 <br> - "YYYYMMDD" 형식으로 KST 기준 |
+| code | String | Y | - 카카오 로그인 요청에 따라 발급받은 인증 코드 |
 
 #### 요청 헤더
 
-- 없음
+없음
 
 #### 응답 헤더
 
-- access_token, refresh_token 과 같은 토큰류들을 Set-cookie 헤더에 넣어서 보냄
+- access_token, refresh_token 과 같은 **우리 서버 토큰**을 Set-cookie 헤더에 넣어서 보냄
 
 #### 출력 결과
 
@@ -50,7 +53,53 @@
 	"result": "success",
 	"message": "성공",
 	"data": {
-		"user_id": 1,
+		"name": "권은빈", 
+		"birthday": "19990123"
+	}
+}
+
+// 실패 - 400 ~ 5??
+{
+	"result": "failure",
+	"message": "카카오 회원가입/로그인에 실패했습니다.",
+}
+```
+
+> check: 카카오 인증 코드가 유효하지 않은지, 카카오 API 요청에 실패했는지 등 에러 메시지 변경될 수 있음.
+
+
+### 회원가입
+
+#### 기본 정보
+| method | request URL          | format | description |
+|--------|----------------------|--------|-------------|
+|PATCH   |{base-url}/sign-up    | JSON   | 회원가입      |
+
+#### 요청 변수
+
+| name | type | required | description |
+|------|------|----------|-------------|
+| name | String | N | - 사용자 닉네임 <br> - 최대 25자 |
+| birthday | Datetime | N | - 사용자 생일 <br> - "YYYYMMDD" 형식으로 KST 기준 |
+
+#### 요청 헤더
+
+- Authorization 에 Bearer 토큰
+
+#### 응답 헤더
+
+없음
+
+#### 출력 결과
+
+```json
+// 성공 - 200~
+{
+	"result": "success",
+	"message": "성공",
+	"data": {
+		"name": "세리",
+		"birthday": "19960123"
 	}
 }
 
