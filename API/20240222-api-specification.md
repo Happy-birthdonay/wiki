@@ -79,8 +79,8 @@
 
 | name | type | required | description |
 |------|------|----------|-------------|
-| name | String | N | - 사용자 닉네임 <br> - 최대 25자 |
-| birthday | Datetime | N | - 사용자 생일 <br> - "YYYYMMDD" 형식으로 KST 기준 |
+| name | String | Y | - 사용자 닉네임 <br> - 최대 25자 |
+| birthday | Datetime | Y | - 사용자 생일 <br> - "YYYYMMDD" 형식으로 KST 기준 |
 
 #### 요청 헤더
 
