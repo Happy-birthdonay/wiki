@@ -7,7 +7,9 @@
 
 2022.02.28 - 은빈, 민주 수정
 
-2022.03.06 - 은빈, 민주 수정 (Last updated)
+2022.03.06 - 은빈, 민주 수정
+
+2022.03.14 - 은빈 수정 (Last updated)
 
 ## DB 스키마
 
@@ -53,6 +55,7 @@
 	"result": "success",
 	"message": "성공",
 	"data": {
+		"user_id": 1,
 		"name": "권은빈", 
 		"birthday": "19990123"
 	}
@@ -73,7 +76,7 @@
 #### 기본 정보
 | method | request URL          | format | description |
 |--------|----------------------|--------|-------------|
-|PATCH   |{base-url}/sign-up    | JSON   | 회원가입      |
+|PATCH   |{base-url}/sign-up/{user-id}| JSON   | 회원가입      |
 
 #### 요청 변수
 
@@ -98,6 +101,7 @@
 	"result": "success",
 	"message": "성공",
 	"data": {
+		"user_id": 1,
 		"name": "세리",
 		"birthday": "19960123"
 	}
@@ -133,6 +137,7 @@
 	"result": "success",
 	"message": "성공",
 	"data": {
+		"user_id": 1,
 		"name": "세리",
 		"birthday": "19960123",
 	}
@@ -177,6 +182,7 @@
 	"result": "success",
 	"message": "성공",
 	"data": {
+		"box_id": 1,
 		"name": "그린피스",
 		"color": "pink",
 	}
@@ -223,15 +229,15 @@
 	"data": {
 		"donation_box_list": [
 			{
-				"id": "1",
+				"box_id": "1",
 				"color": "pink",
 			},
 			{
-				"id": "2",
+				"box_id": "2",
 				"color": "blue",
 			},
 			{
-				"id": "5",
+				"box_id": "5",
 				"color": "red",
 			},
 			...
@@ -269,6 +275,7 @@
 	"result": "success",
 	"message": "성공",
 	"data": {
+		"box_id": 1,
 		"name": "그린피스",
 		"url": "https://....",
 		"description": "카카오톡 선물하기 대신 함께 기부해요!",
@@ -399,19 +406,19 @@
 	"data": {
 		"message_list": [
 			{
-				"id": "1",
+				"message_id": "1",
 				"created_by": "박민주",
 				"contents": "축하합니다축하합니다축하합니다축하합니다",
 				"tag": "happiness",
 			},
 			{
-				"id": "2",
+				"message_id": "2",
 				"created_by": "복예린",
 				"contents": "축하합니다축하합니다축하합니다축하합니다",
 				"tag": "happiness",
 			},
 			{
-				"id": "7",
+				"message_id": "7",
 				"created_by": "민주똥꼬불난다",
 				"contents": "축하합니다축하합니다축하합니다축하합니다",
 				"tag": "happiness",
@@ -446,7 +453,7 @@
 
 | name | type | required | description |
 |------|------|----------|-------------|
-| boxId | Int | Y | - 증명서에 해당하는 선물상자 ID |
+| box_id | Int | Y | - 증명서에 해당하는 선물상자 ID |
 | image | String | Y | - 증명서에 첨부될 사진 <br> - Base64 인코딩 필요 |
 
 #### 요청 헤더
@@ -492,6 +499,7 @@
 	"result": "success",
 	"message": "성공",
 	"data": {
+		"box_id": 1,
 		"box_name": "그린피스",
 		"box_created_by": "권은빈",
 		"donors_name": ["박민주", "복예린", ...],
