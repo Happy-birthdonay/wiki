@@ -15,7 +15,7 @@
 
 ## DB 스키마
 
-![이미지](/images/ERD/20240320-v4.png)
+![이미지](/images/ERD/20240320-v5.png)
 
 ## 사용자
 
@@ -296,7 +296,7 @@
 }
 ```
 
-- openDate는 저장된 형식대로 전송
+- openDate는 yyyymmdd 형식의 String으로 전송
 - messageCount는 상자에 담긴 쪽지 개수, 없을 땐 0으로 보내주기
 
 ### 상자 기부 여부 변경하기
