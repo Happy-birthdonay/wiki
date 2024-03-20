@@ -9,13 +9,13 @@
 
 2022.03.06 - 은빈, 민주 수정
 
-2022.03.14 - 은빈 수정 (Last updated)
+2022.03.14 - 은빈 수정
+
+2022.03.20 - 은빈, 민주 수정 (Last updated)
 
 ## DB 스키마
 
-![이미지](/images/ERD/20240222-v3.png)
-
-> check: Auth Code, 카카오 Access/Refresh token 저장 여부 조금 더 고민해봐야 함
+![이미지](/images/ERD/20240320-v4.png)
 
 ## 사용자
 
@@ -57,7 +57,7 @@
 	"data": {
 		"user_id": 1,
 		"name": "권은빈", 
-		"birthday": "19990123"
+		"birthday": "0123"
 	}
 }
 
@@ -76,18 +76,19 @@
 #### 기본 정보
 | method | request URL          | format | description |
 |--------|----------------------|--------|-------------|
-|PATCH   |{base-url}/sign-up/{user-id}| JSON   | 회원가입      |
+|PATCH   |{base-url}/sign-up| JSON   | 회원가입      |
 
 #### 요청 변수
 
 | name | type | required | description |
 |------|------|----------|-------------|
 | name | String | Y | - 사용자 닉네임 <br> - 최대 25자 |
-| birthday | Datetime | Y | - 사용자 생일 <br> - "YYYYMMDD" 형식으로 KST 기준 |
+| birthday | String | Y | - 사용자 생일 <br> - "mmdd" 형식 |
 
 #### 요청 헤더
 
 - Authorization 에 Bearer 토큰
+- 토큰을 통해 user_id 추출
 
 #### 응답 헤더
 
@@ -103,7 +104,7 @@
 	"data": {
 		"user_id": 1,
 		"name": "세리",
-		"birthday": "19960123"
+		"birthday": "0123"
 	}
 }
 
@@ -139,7 +140,7 @@
 	"data": {
 		"user_id": 1,
 		"name": "세리",
-		"birthday": "19960123",
+		"birthday": "0123",
 	}
 }
 
