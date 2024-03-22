@@ -15,7 +15,7 @@
 
 ## DB 스키마
 
-![이미지](/images/ERD/20240320-v4.png)
+![이미지](/images/ERD/20240320-v5.png)
 
 ## 사용자
 
@@ -55,7 +55,7 @@
 	"result": "success",
 	"message": "성공",
 	"data": {
-		"user_id": 1,
+		"userId": 1,
 		"name": "권은빈", 
 		"birthday": "0123"
 	}
@@ -102,7 +102,7 @@
 	"result": "success",
 	"message": "성공",
 	"data": {
-		"user_id": 1,
+		"userId": 1,
 		"name": "세리",
 		"birthday": "0123"
 	}
@@ -138,7 +138,7 @@
 	"result": "success",
 	"message": "성공",
 	"data": {
-		"user_id": 1,
+		"userId": 1,
 		"name": "세리",
 		"birthday": "0123",
 	}
@@ -164,10 +164,10 @@
 
 | name | type | required | description |
 |------|------|----------|-------------|
-| user_id | Int | Y | - 상자를 생성할 사용자의 id |
-| name | String | Y | - 상자 이름 <br> - 최대 50자 |
+| name | String | Y | - 기부처 이름 <br> - 최대 50자 |
 | url | String | Y | - 기부처 링크 |
-| description | String | Y | - 상자 설명 <br> - 최대 100자 |
+| boxTitle | String | Y | - 상자 이름 <br> - 최대 50자 |
+| boxDescription | String | Y | - 상자 설명 <br> - 최대 100자 |
 | amount | Int | Y | - 인당 기부할 금액 |
 | color | String | Y | - 상자 색깔 |
 
@@ -183,9 +183,7 @@
 	"result": "success",
 	"message": "성공",
 	"data": {
-		"box_id": 1,
-		"name": "그린피스",
-		"color": "pink",
+		"boxId": 1
 	}
 }
 
@@ -219,7 +217,7 @@
 	"result": "success",
 	"message": "성공",
 	"data": {
-		"donation_box_list": [],
+		"donationBoxList": [],
 	}
 }
 
@@ -228,7 +226,7 @@
 	"result": "success",
 	"message": "성공",
 	"data": {
-		"donation_box_list": [
+		"donationBoxList": [
 			{
 				"box_id": "1",
 				"color": "pink",
@@ -276,16 +274,17 @@
 	"result": "success",
 	"message": "성공",
 	"data": {
-		"box_id": 1,
+		"boxId": 1,
 		"name": "그린피스",
 		"url": "https://....",
-		"description": "카카오톡 선물하기 대신 함께 기부해요!",
+		"boxTitle": "그린피스 짱짱맨",
+		"boxDescription": "카카오톡 선물하기 대신 함께 기부해요!",
 		"amount": 5000,
 		"color": "pink",
-		"is_donated": false,
-		"cert_img_url": "",
-		"open_date": "20230123",
-		"message_count": 10,
+		"isDonated": false,
+		"certImgUrl": "",
+		"openDate": "20230123",
+		"messageCount": 10,
 	},
 }
 
@@ -296,8 +295,8 @@
 }
 ```
 
-- open_date는 저장된 형식대로 전송
-- message_count는 상자에 담긴 쪽지 개수, 없을 땐 0으로 보내주기
+- openDate는 yyyymmdd 형식의 String으로 전송
+- messageCount는 상자에 담긴 쪽지 개수, 없을 땐 0으로 보내주기
 
 ### 상자 기부 여부 변경하기
 
@@ -310,7 +309,7 @@
 
 | name | type | required | description |
 |------|------|----------|-------------|
-| is_donated | Boolean | Y | - 기부 여부에 대한 불리언 값 |
+| isDonated | Boolean | Y | - 기부 여부에 대한 불리언 값 |
 
 #### 요청 헤더
 
@@ -345,8 +344,8 @@
 
 | name | type | required | description |
 |------|------|----------|-------------|
-| box_id | Int | Y | - 쪽지를 넣을 상자의 id |
-| created_by | String | Y | - 쪽지 보내는 사람 이름 <br> - 최대 10자 |
+| boxId | Int | Y | - 쪽지를 넣을 상자의 id |
+| createdBy | String | Y | - 쪽지 보내는 사람 이름 <br> - 최대 10자 |
 | tag | String | Y | - 쪽지의 태그 |
 | contents | String | Y | - 쪽지 내용 <br> - 최대 300자 |
 
@@ -396,7 +395,7 @@
 	"result": "success",
 	"message": "성공",
 	"data": {
-		"message_list": [],
+		"messageList": [],
 	}
 }
 
@@ -405,22 +404,22 @@
 	"result": "success",
 	"message": "성공",
 	"data": {
-		"message_list": [
+		"messageList": [
 			{
-				"message_id": "1",
-				"created_by": "박민주",
+				"messageId": "1",
+				"createdBy": "박민주",
 				"contents": "축하합니다축하합니다축하합니다축하합니다",
 				"tag": "happiness",
 			},
 			{
-				"message_id": "2",
-				"created_by": "복예린",
+				"messageId": "2",
+				"createdBy": "복예린",
 				"contents": "축하합니다축하합니다축하합니다축하합니다",
 				"tag": "happiness",
 			},
 			{
-				"message_id": "7",
-				"created_by": "민주똥꼬불난다",
+				"messageId": "7",
+				"createdBy": "민주똥꼬불난다",
 				"contents": "축하합니다축하합니다축하합니다축하합니다",
 				"tag": "happiness",
 			},
@@ -454,7 +453,7 @@
 
 | name | type | required | description |
 |------|------|----------|-------------|
-| box_id | Int | Y | - 증명서에 해당하는 선물상자 ID |
+| boxId | Int | Y | - 증명서에 해당하는 선물상자 ID |
 | image | String | Y | - 증명서에 첨부될 사진 <br> - Base64 인코딩 필요 |
 
 #### 요청 헤더
@@ -500,12 +499,12 @@
 	"result": "success",
 	"message": "성공",
 	"data": {
-		"box_id": 1,
-		"box_name": "그린피스",
-		"box_created_by": "권은빈",
-		"donors_name": ["박민주", "복예린", ...],
-		"cert_img_url": "s3_image_url",
-		"cert_created_at": "20240124",
+		"boxId": 1,
+		"name": "그린피스",
+		"boxCreatedBy": "권은빈",
+		"donorsNameList": ["박민주", "복예린", ...],
+		"certImgUrl": "s3_image_url",
+		"certCreatedAt": "20240124",
 	}
 }
 
@@ -516,7 +515,7 @@
 }
 ```
 
-- cert_created_at 타입 Datetime, KST, YYYYMMDD
+- certCreatedAt 타입 Datetime, KST, YYYYMMDD
 
 # References
 
