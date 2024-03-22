@@ -164,7 +164,6 @@
 
 | name | type | required | description |
 |------|------|----------|-------------|
-| userId | Int | Y | - 상자를 생성할 사용자의 id |
 | name | String | Y | - 기부처 이름 <br> - 최대 50자 |
 | url | String | Y | - 기부처 링크 |
 | boxTitle | String | Y | - 상자 이름 <br> - 최대 50자 |
