@@ -71,6 +71,50 @@
 > check: 카카오 인증 코드가 유효하지 않은지, 카카오 API 요청에 실패했는지 등 에러 메시지 변경될 수 있음.
 
 
+### access token 리프레쉬
+
+
+#### 기본 정보
+| method | request URL          | format | description |
+|--------|----------------------|--------|-------------|
+|POST    |{base-url}/refresh| -   | refresh token 보내기 |
+
+#### 요청 변수
+
+없음
+
+#### 요청 헤더
+
+- Authorization에 Bearer {refresh_token}
+
+```bash
+# example
+$ http POST :8000/refresh Authorization:"Bearer $REFRESH_TOKEN"
+```
+
+#### 응답 헤더
+
+- access_token, refresh_token 과 같은 **우리 서버 토큰**을 Set-cookie 헤더에 넣어서 보냄
+
+#### 출력 결과
+
+```json
+// 성공 - 200~
+{
+	"result": "success",
+	"message": "성공",
+	"data": {
+		"access_token": "token..."
+	}
+}
+
+// 실패 - 400 ~ 5??
+{
+	"result": "failure",
+	"message": "access token 재발급에 실패했습니다.",
+}
+```
+
 ### 회원가입
 
 #### 기본 정보
