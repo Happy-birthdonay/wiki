@@ -495,7 +495,7 @@ $ http POST :8000/refresh Authorization:"Bearer $REFRESH_TOKEN"
 #### 기본 정보
 | method | request URL          | format | description |
 |--------|----------------------|--------|-------------|
-|POST    |{base-url}/certifications | JSON | S3에 업로드된 이미지 URL 전송 |
+|PATCH    |{base-url}/certifications | JSON | S3에 업로드된 이미지 URL 전송 |
 
 #### 요청 변수
 
