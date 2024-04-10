@@ -11,11 +11,13 @@
 
 2022.03.14 - 은빈 수정
 
-2022.03.20 - 은빈, 민주 수정 (Last updated)
+2022.03.20 - 은빈, 민주 수정
+
+2022.04.08 - 은빈 수정 (Last updated)
 
 ## DB 스키마
 
-![이미지](/images/ERD/20240320-v5.png)
+![이미지](/images/ERD/20240408-v6.png)
 
 ## 사용자
 
@@ -295,7 +297,7 @@ $ http POST :8000/refresh Authorization:"Bearer $REFRESH_TOKEN"
 }
 ```
 
-### 상자 정보 가져오기
+### 상자 정보 가져오기 - 유저용
 
 #### 기본 정보
 | method | request URL          | format | description |
@@ -341,6 +343,52 @@ $ http POST :8000/refresh Authorization:"Bearer $REFRESH_TOKEN"
 
 - openDate는 yyyymmdd 형식의 String으로 전송
 - messageCount는 상자에 담긴 쪽지 개수, 없을 땐 0으로 보내주기
+
+### 상자 정보 가져오기 - 게스트용
+
+#### 기본 정보
+| method | request URL          | format | description |
+|--------|----------------------|--------|-------------|
+|GET    |{base-url}/donation-boxes/{box-id}/guest| JSON   | 게스트에 보여질 상자에 대한 세부 내용 가져오기|
+
+#### 요청 변수
+
+- 없음
+
+#### 요청 헤더
+
+- 없음
+
+#### 출력 결과
+
+```json
+// 성공
+{
+	"result": "success",
+	"message": "성공",
+	"data": {
+		"boxId": 1,
+		"name": "그린피스",
+		"url": "https://....",
+		"boxTitle": "그린피스 짱짱맨",
+		"boxDescription": "카카오톡 선물하기 대신 함께 기부해요!",
+		"amount": 5000,
+		"color": "pink",
+		"isDonated": false,
+		"certImgUrl": "",
+		"messageCount": 10,
+	},
+}
+
+// 실패
+{
+	"result": "failure",
+	"message": "상자 정보를 가져올 수 없습니다."
+}
+```
+
+- messageCount는 상자에 담긴 쪽지 개수, 없을 땐 0으로 보내주기
+
 
 ### 상자 기부 여부 변경하기
 
