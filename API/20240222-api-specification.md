@@ -556,7 +556,7 @@ $ http POST :8000/refresh Authorization:"Bearer $REFRESH_TOKEN"
 		"boxCreatedBy": "권은빈",
 		"donorsNameList": ["박민주", "복예린", ...],
 		"certImgUrl": "s3_image_url",
-		"certCreatedAt": "20240124",
+		"certCreatedAt": "2024-01-24",
 	}
 }
 
@@ -567,7 +567,7 @@ $ http POST :8000/refresh Authorization:"Bearer $REFRESH_TOKEN"
 }
 ```
 
-- certCreatedAt 타입 Datetime, KST, YYYYMMDD
+- certCreatedAt 타입 String yyyy-mm-dd
 
 # References
 
