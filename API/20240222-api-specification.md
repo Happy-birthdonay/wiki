@@ -488,19 +488,19 @@ $ http POST :8000/refresh Authorization:"Bearer $REFRESH_TOKEN"
 
 ## 증명서
 
-### 사진 업로드하기
+### 사진 URL 업로드하기
 
 #### 기본 정보
 | method | request URL          | format | description |
 |--------|----------------------|--------|-------------|
-|POST    |{base-url}/certifications | JSON | 증명서에 첨부될 사진 업로드하기 |
+|POST    |{base-url}/certifications | JSON | S3에 업로드된 이미지 URL 전송 |
 
 #### 요청 변수
 
 | name | type | required | description |
 |------|------|----------|-------------|
 | boxId | Int | Y | - 증명서에 해당하는 선물상자 ID |
-| image | String | Y | - 증명서에 첨부될 사진 <br> - Base64 인코딩 필요 |
+| imageUrl | String | Y | - 증명서에 첨부될 사진 URL <br> - S3 버킷에 업로드 |
 
 #### 요청 헤더
 
@@ -522,16 +522,20 @@ $ http POST :8000/refresh Authorization:"Bearer $REFRESH_TOKEN"
 }
 ```
 
-### 증명서 정보 가져오기
+### 증명서 이미지 가져오기
 
 #### 기본 정보
 | method | request URL          | format | description |
 |--------|----------------------|--------|-------------|
-|GET    |{base-url}/certifications/{box-id} | JSON | 증명서에 들어갈 내용 가져오기 |
+|GET    |{base-url}/certifications | JSON | 증명서에 들어갈 내용 가져오기 |
 
 #### 요청 변수
 
-- 없음
+| name | type | required | description |
+|------|------|----------|-------------|
+| boxId | Int | Y | - 증명서에 해당하는 선물상자 ID |
+
+- 쿼리 파라미터로 전달
 
 #### 요청 헤더
 
