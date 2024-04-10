@@ -429,6 +429,8 @@ $ http POST :8000/refresh Authorization:"Bearer $REFRESH_TOKEN"
 |------|------|----------|-------------|
 | boxId | Int | Y | - 쪽지가 담긴 상자의 id |
 
+- 쿼리 파라미터로 전달
+
 #### 요청 헤더
 
 - Authorization 에 Bearer 토큰
