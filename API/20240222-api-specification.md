@@ -1,19 +1,21 @@
 # API 명세
 
 #### History
-2022.02.20 - 은빈 작성
+2024.02.20 - 은빈 작성
 
-2022.02.22 - 은빈, 민주 작성
+2024.02.22 - 은빈, 민주 작성
 
-2022.02.28 - 은빈, 민주 수정
+2024.02.28 - 은빈, 민주 수정
 
-2022.03.06 - 은빈, 민주 수정
+2024.03.06 - 은빈, 민주 수정
 
-2022.03.14 - 은빈 수정
+2024.03.14 - 은빈 수정
 
-2022.03.20 - 은빈, 민주 수정
+2024.03.20 - 은빈, 민주 수정
 
-2022.04.08 - 은빈 수정 (Last updated)
+2024.04.08 - 은빈 수정
+
+2024.04.29 - 은빈 수정 (Last updated)
 
 ## DB 스키마
 
@@ -376,6 +378,7 @@ $ http POST :8000/refresh Authorization:"Bearer $REFRESH_TOKEN"
 		"color": "pink",
 		"isDonated": false,
 		"certImgUrl": "",
+		"created_by": "권은빈",
 		"messageCount": 10,
 	},
 }
@@ -387,6 +390,7 @@ $ http POST :8000/refresh Authorization:"Bearer $REFRESH_TOKEN"
 }
 ```
 
+- created_by는 상자 생성자 이름
 - messageCount는 상자에 담긴 쪽지 개수, 없을 땐 0으로 보내주기
 
 
