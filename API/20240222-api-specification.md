@@ -15,7 +15,9 @@
 
 2024.04.08 - 은빈 수정
 
-2024.04.29 - 은빈 수정 (Last updated)
+2024.04.29 - 은빈 수정
+
+2024.06.26 - 은빈 수정 (Last updated)
 
 ## DB 스키마
 
@@ -542,19 +544,44 @@ $ http POST :8000/refresh Authorization:"Bearer $REFRESH_TOKEN"
 
 ## 증명서
 
-### 사진 URL 업로드하기
+### 사진 업로드하기
 
 #### 기본 정보
 | method | request URL          | format | description |
 |--------|----------------------|--------|-------------|
-|PATCH    |{base-url}/certifications | JSON | S3에 업로드된 이미지 URL 전송 |
+|POST    |{base-url}/certifications/{box-id} | JSON | 웹상에서 form으로 받은 이미지 전송 |
 
-#### 요청 변수
+#### 요청 바디
 
 | name | type | required | description |
 |------|------|----------|-------------|
-| boxId | Int | Y | - 증명서에 해당하는 선물상자 ID |
-| imageUrl | String | Y | - 증명서에 첨부될 사진 URL <br> - S3 버킷에 업로드 |
+| imageData | image | Y | - 증명서에 해당하는 이미지 파일(png, jpg 등) |
+
+아래 샘플 코드와 같은 느낌으로 들어가면 되지 않을까 하는 생각...
+
+```html
+<form action="certification/uploadimage" method="post" enctype="multipart/form-data">
+    <input type="image" name="imageData">
+    <button type="submit">제출하기</button>
+</form>
+```
+
+```js
+const send = document.querySelector("#submit");
+
+send.addEventListener("click", async () => {
+  const formData = new FormData();
+  const certImage = document.querySelector("#image");
+  formData.append("imageData", certImage.files[0]);
+
+  const response = await fetch("http://example.org/certifications/{box-id}", {
+    method: "POST",
+    body: formData,
+  });
+});
+```
+
+[ref1](https://www.tcpschool.com/html-tag-attrs/form-enctype), [ref2](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest_API/Using_FormData_Objects)
 
 #### 요청 헤더
 
@@ -581,15 +608,11 @@ $ http POST :8000/refresh Authorization:"Bearer $REFRESH_TOKEN"
 #### 기본 정보
 | method | request URL          | format | description |
 |--------|----------------------|--------|-------------|
-|GET    |{base-url}/certifications | JSON | 증명서에 들어갈 내용 가져오기 |
+|GET    |{base-url}/certifications/{box-id} | JSON | 증명서에 들어갈 내용 가져오기 |
 
 #### 요청 변수
 
-| name | type | required | description |
-|------|------|----------|-------------|
-| boxId | Int | Y | - 증명서에 해당하는 선물상자 ID |
-
-- 쿼리 파라미터로 전달
+없음
 
 #### 요청 헤더
 
